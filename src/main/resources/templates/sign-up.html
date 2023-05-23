@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>Suites | Signup Page</title>
+
+    <link rel="canonical" th:href="@{http://localhost:8080/}">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/carousel.css}" rel="stylesheet">
+
+    <style th:inline="css">
+        body, html {
+            background: url("/images/hotel6.jpg") no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+        main {
+            height: 100%;
+        }
+        .login {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            align-content: center;
+            align-items: center
+        }
+        .login-form {
+            width: 400px;
+            height: 370px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            background-color: #000;
+            opacity: 0.87;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        }
+        .text-white {
+            color: #fff!important;
+        }
+    </style>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.1.js}" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            let form = document.getElementById('login-form')
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                let firstName = document.getElementById('firstName').value.trim();
+                let lastName = document.getElementById('lastName').value.trim();
+                let email = document.getElementById('email').value.trim();
+                let password = document.getElementById('password').value.trim();
+                let confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+                if (form.checkValidity() === false) {
+                    event.stopPropagation();
+                } else if (password !== confirmPassword) {
+                    document.getElementById("error").style.display = "block";
+                    document.getElementById("error-message").innerText = "Passwords do not match";
+                    event.stopPropagation();
+                } else {
+                    signup(firstName, lastName, email, password);
+                }
+                form.classList.add('was-validated');
+            })
+        }
+
+        function signup(firstName, lastName, email, password) {
+            let userData = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+            }
+
+            $.ajax({
+                type : "post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                url : 'http://localhost:8080/api/user',
+                data : JSON.stringify(userData),
+                success : function(response) {
+                    login(response.email, password)
+                },
+            })
+        }
+
+        function login(email, password) {
+            $.ajax({
+                type : "post",
+                dataType: "json",
+                url : 'http://localhost:8080/api/login',
+                data : {
+                    email: email,
+                    password: password
+                },
+                success : function(response) {
+                    localStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("refresh_token", response.refresh_token);
+                    window.open('/', '_self');
+                },
+            })
+        }
+
+        $(document).ajaxError(function(event,xhr,options){
+            let errorDiv = document.getElementById("error");
+            if (xhr.status === 400) {
+                errorDiv.style.display = "block";
+                document.getElementById("error-message").innerText = "Email already exists";
+            } else {
+                errorDiv.style.display = "block";
+                document.getElementById("error-message").innerText = "Something went wrong";
+            }
+        });
+    </script>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top shadow-sm bg-transparent text-light">
+        <a class="navbar-brand" th:href="@{/}">Suites</a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/rooms}">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/#about}">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">CONTACT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">LOGIN</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/sign-up}">SIGNUP <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main role="main">
+    <div class="container login">
+        <form name='loginForm' id="login-form" novalidate>
+            <div class="login-form px-4">
+                <div class="text--center text--white bg-danger" style="color: white; border-radius: 5px" th:if="${logout == true}"> You have been logged out. </div>
+                <h3 class="text-white m-2">Sign Up</h3>
+                <div class="alert alert-warning alert-dismissible fade show" style="display: none" id="error" role="alert">
+                    <span id="error-message"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input name="firstName" type="text" class="form-control" id="firstName" placeholder="Enter First Name" required />
+                            <div class="invalid-feedback">
+                                Please enter First Name
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input name="lastName" type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required />
+                            <div class="invalid-feedback">
+                                Please enter Last Name
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row w-100">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Enter Email" required />
+                            <div class="invalid-feedback">
+                                Please enter valid email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input name="password" type="password" class="form-control" id="password" placeholder="Enter Password" required />
+                            <div class="invalid-feedback">
+                                Please enter your password
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required />
+                            <div class="invalid-feedback" id="confirmPasswordFeedback">
+                                Please fill in this field
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-inline-flex w-100">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                            <label class="form-check-label" for="invalidCheck">
+                                Agree to terms and conditions
+                            </label>
+                            <div class="invalid-feedback">
+                                You must agree to continue
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="text-white btn btn-danger mb-2">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</main>
+<script th:inline="javascript">
+
+    window.onscroll = () => {
+        scrollNavbar();
+    };
+
+    scrollNavbar = () => {
+        const navbar = document.querySelector(".navbar");
+
+        if (document.documentElement.scrollTop > 100) {
+            navbar.classList.add("bg-white");
+            navbar.classList.add("navbar-light");
+            navbar.classList.add("text-black");
+            navbar.classList.remove("bg-transparent");
+            navbar.classList.remove("navbar-dark");
+            navbar.classList.remove("text-white");
+        } else {
+            navbar.classList.add("bg-transparent");
+            navbar.classList.add("navbar-dark");
+            navbar.classList.add("text-white");
+            navbar.classList.remove("bg-dark");
+            navbar.classList.remove("navbar-light");
+            navbar.classList.remove("text-black");
+        }
+    }
+</script>
+<!--<script th:src="@{/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--        crossorigin="anonymous"></script>-->
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</body>
+</html>

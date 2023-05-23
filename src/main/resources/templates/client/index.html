@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>Suites | Home Page</title>
+
+    <link rel="canonical" th:href="@{http://localhost:8080/}">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/carousel.css}" rel="stylesheet">
+
+    <style th:inline="css">
+        body, html {
+            background-color: #f7f7f7;
+            height: 100%;
+        }
+        main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+        }
+        h2 {
+            position: relative;
+            display: inline-block;
+            font-family: "Playfair Display";
+            font-size: 40px;
+        }
+        h2:before {
+            width: 100px;
+            bottom: -10px;
+            left: 50%;
+        }
+        h2:before, h2:after {
+            content: "";
+            position: absolute;
+            height: 1px;
+            background: black;
+            transform: translateX(-50%);
+        }
+        .gallery {
+            margin-bottom: 50px;
+        }
+        .gallery-image {
+            height: 100%;
+            width: 100%;
+        }
+        footer {
+            margin-top: 50px;
+            margin-bottom: 0px!important;
+            min-height: 100px;
+            background-color: #4d4747;
+            font-family: "Playfair Display";
+            position: absolute;
+        }
+        .footer-column {
+            margin: 8px;
+        }
+        .footer-column button, .read-btn {
+            border-radius: 50px;
+        }
+        .text-primary {
+            color: #f23a2e!important;
+        }
+        .svg svg {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top shadow-sm bg-transparent text-light">
+        <a class="navbar-brand" th:href="@{http://localhost:8080}">Suites</a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{http://localhost:8080}">HOME <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/rooms">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">CONTACT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">LOGIN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/sign-up">SIGNUP</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+            <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="first-slide img-fluid text-center" style="width: 100vw; max-height: 100vh;" th:src="@{/images/hotel1.jpg}" alt="First slide">
+                <div class="container text-center">
+                    <div class="carousel-caption text-center">
+                        <h1>Welcome to Suites</h1>
+                        <p>HOTEL AND RESORTS</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="second-slide img-fluid text-center" style="width: 100vw; max-height: 100vh;" th:src="@{/images/hotel2.jpg}" alt="Second slide">
+                <div class="container text-center">
+                    <div class="carousel-caption text-center">
+                        <h1>Unique Experience</h1>
+                        <p>ENJOY WITH US</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="third-slide img-fluid text-center" style="width: 100vw; max-height: 100vh;" th:src="@{/images/hotel3.jpg}" alt="Third slide">
+                <div class="container text-center">
+                    <div class="carousel-caption text-center">
+                        <h1>Relaxing Room</h1>
+                        <p>YOUR ROOM, YOUR STAY</p>
+                        <p><a class="btn btn-lg btn-primary" href="/booking" role="button">Book a room</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="container marketing text-center">
+        <h2 class="mb-5 mr-auto">Our Rooms</h2>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card border-0 bg-white">
+                    <img class="card-img-top" th:src="@{/images/hotel3.jpg}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Standard Rooms</h5>
+                        <p class="card-text">A beautiful space where you can spend the night in between trips</p>
+                        <a th:href="@{/rooms/#standard}" class="btn btn-primary">Book Standard Room</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 bg-white">
+                    <img class="card-img-top" th:src="@{/images/hotel3.jpg}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Family Rooms</h5>
+                        <p class="card-text">A big space where you can lodge into to spend quality time with your family</p>
+                        <a th:href="@{/rooms/#family}" class="btn btn-primary">Book Family Room</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 bg-white">
+                    <img class="card-img-top" th:src="@{/images/hotel3.jpg}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Deluxe Rooms</h5>
+                        <p class="card-text">Our special package with breakfast, lunch and dinner of your choosing</p>
+                        <a th:href="@{/rooms/#deluxe}" class="btn btn-primary">Book Deluxe Room</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette" id="about">
+            <div class="col-md-6">
+                <img class="featurette-image img-fluid" style="height: 500px;" th:src="@{/images/hotel8.jpg}" data-holder-rendered="true">
+                <img class="featurette-image img-fluid" style="position: absolute; right: 0; bottom: 0; width: 270px; height: 250px; border: 8px solid white;" th:src="@{/images/hotel7.jpg}" data-holder-rendered="true">
+            </div>
+            <div class="col-md-6">
+                <h2 class="featurette-heading mb-5">About Us</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nobis magni eaque velit eum, id rem eveniet dolor possimus voluptas..</p>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+        <div class="container">
+            <h2 class="mb-5 mr-auto">Hotel Features</h2>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-2 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M2,15C3.67,14.25 5.33,13.5 7,13.17V5A3,
+                                    3 0 0,1 10,2C11.31,2 12.42,2.83 12.83,4H10A1,1 0 0,0 9,5V6H14V5A3,
+                                    3 0 0,1 17,2C18.31,2 19.42,2.83 19.83,4H17A1,1 0 0,0 16,5V14.94C18,
+                                    14.62 20,13 22,13V15C19.78,15 17.56,17 15.33,17C13.11,17 10.89,
+                                    15 8.67,15C6.44,15 4.22,16 2,17V15M14,8H9V10H14V8M14,12H9V13C10.67,
+                                    13.16 12.33,14.31 14,14.79V12M2,19C4.22,18 6.44,17 8.67,17C10.89,17 13.11,
+                                    19 15.33,19C17.56,19 19.78,17 22,17V19C19.78,19 17.56,21 15.33,21C13.11,21
+                                    10.89,19 8.67,19C6.44,19 4.22,20 2,21V19Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Swimming Pool</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M18 10H6A2 2 0 0 0 4 12V19H20V12A2 2 0 0 0 18 10M18 14H14V12H18M17 9H7V4H17Z" />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Hotel Teller</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M13.34,8.17C12.41,8.17 11.65,7.4 11.65,6.47A1.69,
+                                    1.69 0 0,1 13.34,4.78C14.28,4.78 15.04,5.54 15.04,6.47C15.04,7.4 14.28,
+                                    8.17 13.34,8.17M10.3,19.93L4.37,18.75L4.71,17.05L8.86,17.9L10.21,11.04L8.69,
+                                    11.64V14.5H7V10.54L11.4,8.67L12.07,8.59C12.67,8.59 13.17,8.93 13.5,9.44L14.36,
+                                    10.79C15.04,12 16.39,12.82 18,12.82V14.5C16.14,14.5 14.44,13.67 13.34,12.4L12.84,
+                                    14.94L14.61,16.63V23H12.92V17.9L11.14,16.21L10.3,19.93M21,23H19V3H6V16.11L4,
+                                    15.69V1H21V23M6,23H4V19.78L6,20.2V23Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Fire Exit</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M16,6H6L1,12V15H3A3,3 0 0,0 6,18A3,3 0 0,0 9,15H15A3,3 0 0,0 18,
+                                    18A3,3 0 0,0 21,15H23V12C23,10.89 22.11,10 21,10H19L16,6M6.5,7.5H10.5V10H4.5L6.5,7.5M12,
+                                    7.5H15.5L17.46,10H12V7.5M6,13.5A1.5,1.5 0 0,1 7.5,15A1.5,1.5 0 0,1 6,16.5A1.5,1.5 0 0,
+                                    1 4.5,15A1.5,1.5 0 0,1 6,13.5M18,13.5A1.5,1.5 0 0,1 19.5,15A1.5,1.5 0 0,1 18,16.5A1.5,
+                                    1.5 0 0,1 16.5,15A1.5,1.5 0 0,1 18,13.5Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Car Parking</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M22 9A4.32 4.32 0 0 1 19.78 8.45A3.4 3.4 0 0 0 18 8V7A4.32 4.32 0 0 1
+                                    20.22 7.55A3.4 3.4 0 0 0 22 8M22 6A3.4 3.4 0 0 1 20.22 5.55A4.32 4.32 0 0 0 18 5V6A3.4 3.4 0
+                                    0 1 19.78 6.45A4.32 4.32 0 0 0 22 7M22 10A3.4 3.4 0 0 1 20.22 9.55A4.32 4.32 0 0 0 18 9V10A3.4
+                                    3.4 0 0 1 19.78 10.45A4.32 4.32 0 0 0 22 11M10 12.73A70.39 70.39 0 0 0 17 11V4S10.5 2 7.5 2A5.5
+                                    5.5 0 0 0 6.12 12.82L7 19H8A3 3 0 0 0 9.46 21.33A3.15 3.15 0 0 1 11 24H12A4.12 4.12 0 0 0 10.09
+                                    20.55C9.39 20 9 19.63 9 19H10M7.5 10A2.5 2.5 0 1 1 10 7.5A2.5 2.5 0 0 1 7.5 10Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Hair Dryer</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M7.5,7L5.5,5H18.5L16.5,7M11,13V19H6V21H18V19H13V13L21,5V3H3V5L11,13Z" />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Minibar</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M15.5,21.27L14.66,21.18C13.9,21.11 13.25,20.6 13,19.87C12.47,17.91 12.47,
+                                    15.83 13,13.87C15.32,13.4 17,11.37 17,9C17,7 15,2 15,2H9C9,2 7,7 7,9C7,11.38 8.67,13.42 11,13.9C11.53,
+                                    15.86 11.53,17.94 11,19.9C10.76,20.62 10.12,21.13 9.37,21.21L8.5,21.3C8.5,21.3 8,21.28 8,22H16C16,
+                                    21.28 15.5,21.27 15.5,21.27M9.44,7L10.44,4H13.56L14.56,7H9.44Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Drinks</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="text-center p-4 item">
+                        <span class="display-3 mb-3 d-block text-primary">
+                            <svg style="width:100px;height:100px" viewBox="0 0 24 24">
+                                <path fill="#ff2714" d="M14.97,5.92C14.83,5.41 14.3,5.1 13.79,5.24L10.39,6.15L5.95,2.03L4.72,2.36L7.38,
+                                    6.95L4.19,7.8L2.93,6.82L2,7.07L3.66,9.95L14.28,7.11C14.8,6.96 15.1,6.43 14.97,5.92M21,10L20,12H15L14,
+                                    10L15,9H17V7H18V9H20L21,10M22,20V22H2V20H15V13H20V20H22Z"
+                                />
+                            </svg>
+                        </span>
+                        <h2 class="h5">Car Airport</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="container gallery mb-5">
+            <h2 class="mb-5 mr-auto">Our Gallery</h2>
+            <div class="row m-0 p-0">
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel3.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel1.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel5.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+            </div>
+
+            <div class="row m-0 p-0">
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel2.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel8.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel6.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+            </div>
+
+            <div class="row m-0 p-0">
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel7.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel5.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+                <div class="col-sm-4 m-0 p-0">
+                    <img th:src="@{/images/hotel4.jpg}" class="img-fluid gallery-image" alt="image" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="container-fluid footer">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-sm-3 footer-column">
+                    <p class="text-white"><strong>About</strong></p>
+                    <p style="color: #b0b7bd">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci autem consequatur
+                        distinctio enim maiores numquam provident veniam. Consequuntur debitis, delectus eaque
+                        error et obcaecati odio quia quibusdam ut voluptatibus. Perspiciatis!
+                    </p>
+                    <a class="btn btn-danger text-white read-btn" href="#about">Read more</a>
+                </div>
+                <div class="col-sm-3 footer-column">
+                    <p class="text-white"><strong>Contact Us</strong></p><br/>
+                    <p style="color: #b0b7bd">Contact us at <a href="#" class="text-white-50"> suites@gmail.com </a></p><br/>
+                    <button class="btn btn-danger text-white" th:href="@{/contact}">Read more</button>
+                </div>
+                <div class="col-sm-2 footer-column">
+                    <p class="text-white"><strong>Quick Links</strong></p><br/>
+                    <p>
+                        <a href="#about" style="color: #b0b7bd">About</a><br/>
+                        <a th:href="@{/contact}" style="color: #b0b7bd">Contact Us</a><br/>
+                        <a th:href="@{/rooms}" style="color: #b0b7bd">Book a Room</a>
+                    </p>
+                </div>
+                <div class="col-sm-3 footer-column">
+                    <p class="text-white"><strong>Social Icons</strong></p>
+                    <p class="svg">
+                        <!-- facebook -->
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#b0b7bd" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44
+                                21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96
+                                16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89
+                                14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"
+                            />
+                        </svg>
+                        <!-- messenger -->
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#b0b7bd" d="M12,2C6.36,2 2,6.13 2,11.7C2,14.61 3.19,17.14 5.14,18.87C5.3,19
+                                5.4,19.22 5.41,19.44L5.46,21.22C5.5,21.79 6.07,22.16 6.59,21.93L8.57,21.06C8.74,21
+                                8.93,20.97 9.1,21C10,21.27 11,21.4 12,21.4C17.64,21.4 22,17.27 22,11.7C22,6.13 17.64,2
+                                12,2M18,9.46L15.07,14.13C14.6,14.86 13.6,15.05 12.9,14.5L10.56,12.77C10.35,12.61 10.05,
+                                12.61 9.84,12.77L6.68,15.17C6.26,15.5 5.71,15 6,14.54L8.93,9.87C9.4,9.14 10.4,8.95 11.1,
+                                9.47L13.44,11.23C13.66,11.39 13.95,11.39 14.16,11.23L17.32,8.83C17.74,8.5 18.29,9 18,9.46Z"
+                            />
+                        </svg>
+                        <!-- instagram -->
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#b0b7bd" d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,
+                                22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,
+                                20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,
+                                6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,
+                                12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,
+                                12A3,3 0 0,0 12,9Z"
+                            />
+                        </svg>
+                        <!-- twitter -->
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path fill="#b0b7bd" d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,
+                                4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,
+                                9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,
+                                10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36
+                                3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,
+                                21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"
+                            />
+                        </svg>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p class="float-right"><a href="#" class="text-white">Back to top</a></p>
+        <p class="text-center text-white">Copyright © 2022 All Rights Reserved | Made By Aaliyah Junaid</p>
+
+    </footer>
+</main>
+
+<script th:src="@{/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    window.jQuery || document.write('<script th:src="@{/js/jquery-slim.min.js}">' + '<\/script>')
+
+    window.onscroll = () => {
+        scrollNavbar();
+    };
+
+    scrollNavbar = () => {
+        const navbar = document.querySelector(".navbar");
+
+        if (document.documentElement.scrollTop > 100) {
+            navbar.classList.add("bg-white");
+            navbar.classList.add("navbar-light");
+            navbar.classList.add("text-black");
+            navbar.classList.remove("bg-transparent");
+            navbar.classList.remove("navbar-dark");
+            navbar.classList.remove("text-white");
+        } else {
+            navbar.classList.add("bg-transparent");
+            navbar.classList.add("navbar-dark");
+            navbar.classList.add("text-white");
+            navbar.classList.remove("bg-dark");
+            navbar.classList.remove("navbar-light");
+            navbar.classList.remove("text-black");
+        }
+    }
+</script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

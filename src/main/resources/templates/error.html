@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>Suites | Error Page</title>
+
+    <link rel="canonical" th:href="@{http://localhost:8080/}">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/carousel.css}" rel="stylesheet">
+
+    <style th:inline="css">
+        body, html {
+            /*background: #ffffff;*/
+            background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+            /*background-image: linear-gradient(to right top, #dc3545, #de1963, #d50b85, #bf24a7, #983ec7, #7c5ee1, #5577f3, #008dff, #00aeff, #00cbff, #00e4fd, #5ffbf1);*/
+            height: 100%;
+            font-family: "Playfair Display";
+        }
+        main {
+            height: 100%;
+        }
+        .error {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 70%;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .oops {
+            font-size: 200px;
+        }
+        a {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<main role="main">
+    <div class="container error">
+        <div class="d-flex flex-column justify-content-between align-content-center">
+            <h3 class="text-danger oops">Oops!</h3>
+            <h6><strong class="text-white">404 - PAGE NOT FOUND</strong></h6>
+            <p class="text-white">The page you're looking for might've been removed, had its name changed or is temporarily unavailable.</p>
+            <a th:href="@{/}" class="btn btn-danger text-white w-50 m-auto">GO TO HOMEPAGE</a>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</body>
+</html>

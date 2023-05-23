@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>Suites | Login Page</title>
+
+    <link rel="canonical" th:href="@{http://localhost:8080/}">
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/carousel.css}" rel="stylesheet">
+
+    <style th:inline="css">
+        body, html {
+            background: url("/images/hotel6.jpg") no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+        main {
+            height: 100%;
+        }
+        .login {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: center;
+            align-content: center;
+            align-items: center
+        }
+        .login-form {
+            width: 400px;
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            background-color: #000;
+            opacity: 0.87;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        }
+        .text-white {
+            color: #fff!important;
+        }
+    </style>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.1.js}" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+            crossorigin="anonymous"></script>
+    <script th:inline="javascript">
+        window.onload = function () {
+            let form = document.getElementById('login-form')
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (form.checkValidity() === false) {
+                    event.stopPropagation();
+                } else {
+                    let email = document.getElementById('email').value.trim();
+                    let password = document.getElementById('password').value.trim();
+
+                    login(email, password)
+                }
+                form.classList.add('was-validated');
+            })
+        }
+
+        function login(email, password) {
+            $.ajax({
+                type : "post",
+                dataType: "json",
+                url : 'http://localhost:8080/api/login',
+                data : {
+                    email: email,
+                    password: password
+                },
+                success : function(response) {
+                    localStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("refresh_token", response.refresh_token);
+                    window.open('/', '_self');
+                },
+            })
+        }
+
+        $(document).ajaxError(function(event,xhr,options){
+            let errorDiv = document.getElementById("error");
+            if (xhr.status === 401) {
+               errorDiv.style.display = "block";
+            }
+        });
+    </script>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top shadow-sm bg-transparent text-light">
+        <a class="navbar-brand" th:href="@{/}">Suites</a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/rooms}">ROOMS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/#about}">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">CONTACT</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/login}">LOGIN <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/sign-up}">SIGNUP</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main role="main">
+    <div class="container login">
+        <form name='loginForm' id="login-form" novalidate>
+            <div class="login-form">
+                <div class="text--center text--white bg-danger" style="color: white; border-radius: 5px" th:if="${param.logout == true}"> You have been logged out. </div>
+                <h3 class="text-white">Login</h3>
+                <div class="alert alert-warning alert-dismissible fade show" style="display: none" id="error" role="alert">
+                    Invalid username or password
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter Email" required />
+                    <div class="invalid-feedback">
+                        Please enter valid email
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Enter Password" required />
+                    <div class="invalid-feedback">
+                        Please enter your password
+                    </div>
+                </div>
+                <button type="submit" class="text-white btn btn-danger mb-2">Login</button>
+            </div>
+        </form>
+    </div>
+</main>
+<script th:inline="javascript">
+
+    window.onscroll = () => {
+        scrollNavbar();
+    };
+
+    scrollNavbar = () => {
+        const navbar = document.querySelector(".navbar");
+
+        if (document.documentElement.scrollTop > 100) {
+            navbar.classList.add("bg-white");
+            navbar.classList.add("navbar-light");
+            navbar.classList.add("text-black");
+            navbar.classList.remove("bg-transparent");
+            navbar.classList.remove("navbar-dark");
+            navbar.classList.remove("text-white");
+        } else {
+            navbar.classList.add("bg-transparent");
+            navbar.classList.add("navbar-dark");
+            navbar.classList.add("text-white");
+            navbar.classList.remove("bg-dark");
+            navbar.classList.remove("navbar-light");
+            navbar.classList.remove("text-black");
+        }
+    }
+</script>
+<!--<script th:src="@{/js/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--        crossorigin="anonymous"></script>-->
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

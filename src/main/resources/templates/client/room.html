@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>Suites | Book Room</title>
+
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/room.css}">
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/auth.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+            let today = new Date();
+            let month = ('0' + (today.getMonth() + 1)).slice(-2);
+            let day = ('0' + today.getDate()).slice(-2);
+            let year = today.getFullYear();
+            let date = year + '-' + month + '-' + day;
+            $('#datetimepicker').attr('min', date);
+        });
+
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+            }
+        });
+
+        window.onload = function (){
+            let form = document.getElementById('form');
+
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (form.checkValidity() === false) {
+                    event.stopPropagation();
+                } else {
+                    let roomId = document.getElementById("roomId").value.trim();
+                    let date = new Date(document.getElementById('datetimepicker').value).toISOString();
+
+                    bookRoom(roomId, date)
+                }
+                form.classList.add('was-validated');
+            })
+        }
+
+        function bookRoom(roomId, date) {
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: 'http://localhost:8080/api/user/profile',
+                success: function (response) {
+                   let data = {
+                        userId: response.id,
+                        roomId: roomId,
+                        date: date
+                    }
+
+                    $.ajax({
+                        type : "post",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        url : 'http://localhost:8080/api/bookings',
+                        data : JSON.stringify(data),
+                        success : function(response) {
+                            window.open('/bookings', '_self');
+                        },
+                    })
+                }
+            })
+        }
+
+        $(document).ajaxError(function(event,xhr,options){
+            window.open('/login', '_self');
+        });
+    </script>
+    <style th:inline="css">
+        body, html {
+            height: 100% !important;
+        }
+        main {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top shadow-sm bg-transparent">
+        <a class="navbar-brand" th:href="@{/}">Suites</a>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">HOME</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/rooms">ROOMS <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">CONTACT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">PROFILE</a>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link bg-transparent border-0" onclick="logout()">SIGN OUT</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main role="main">
+    <div id="booking" class="section">
+        <div class="section-center">
+            <div class="container">
+                <div class="row">
+                    <div class="booking-form">
+                        <div class="form-header">
+                            <h1>Make your reservation</h1>
+                        </div>
+                        <form id="form" novalidate>
+                            <input type="hidden" th:value="${room.id}" id="roomId">
+                            <div class="form-group d-flex justify-content-center">
+                                <img th:src="${room.roomImg}" alt="Room Image" style="max-height: 250px" class="img-fluid img-thumbnail w-80">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input class="form-control readonly"
+                                               type="text"
+                                               th:value="${room.name}"
+                                               readonly>
+                                        <span class="form-label">Room Name</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">&#8358;</div>
+                                            </div>
+                                            <input class="form-control readonly"
+                                                   type="number"
+                                                   th:value="${room.price}"
+                                                   readonly>
+                                            <span class="form-label">Price</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input class="form-control"
+                                                   type="date" id="datetimepicker" required>
+                                            <span class="form-label">Date</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn">Book Now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
